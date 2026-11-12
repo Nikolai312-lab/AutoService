@@ -249,13 +249,16 @@ docker cp autoservice_db:/tmp/autoservice_backup.dump .\autoservice_backup.dump
 
 -   Nginx използва SSL сертификати от директорията certificates.
 -   Създайте тестови самоподписани сертификати:
+    ```
     mkdir -p certificates
-
+    ```
+    
+    ```
     openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
       -keyout certificates/autoservice.key \
       -out certificates/autoservice.crt \
       -subj "/CN=localhost"
-
+    ```
 ### 12.4 Стартиране на контейнерите
 
 -   Изграждане и стартиране на услугите:
@@ -284,7 +287,3 @@ docker cp autoservice_db:/tmp/autoservice_backup.dump .\autoservice_backup.dump
     python create_admin.py
 -   За добавяне на услугите към базата данни напишете:
     python seed_services.py
-
-
-
-    sudo chown codespace:codespace certificates
