@@ -1,4 +1,8 @@
 # AutoService -- система за управление на автосервиз
+# Име -- Николяй Георгиев Тънкьовски
+# Факултетен номер -- 24101011
+# Специалност -- Компютърни технологии
+
 
 ## 1. Описание на проекта
 
@@ -91,39 +95,28 @@
     публикувайте реални пароли или секретни ключове.
 4.  Стартирайте контейнерите:
 
-``` powershell
-docker compose up --build -d
-```
+-   docker compose up --build -d
 
 5.  Проверете състоянието им:
 
-``` powershell
-docker compose ps
-```
+-   docker compose ps
 
 6.  Изпълнете миграциите:
 
-``` powershell
-docker compose exec web1 flask db upgrade
-```
+-   docker compose exec web1 flask db upgrade
 
-7.  Отворете приложението в браузър:
 
-``` text
-http://localhost:8080
-```
+7.  Отворете приложението в браузъра:
 
-За преглед на логовете:
+-   http://localhost:8080
 
-``` powershell
-docker compose logs -f web1
-```
+-   https://localhost:8443/
 
-За спиране на услугите:
+-   За преглед на логовете отворете Dozzle в браузъра:
+    http://localhost:9999/
 
-``` powershell
-docker compose down
-```
+-   За спиране на услугите:
+    docker compose stop
 
 > Забележка: `docker compose down` спира и премахва контейнерите, но не
 > изтрива именуваните Docker volumes. Не използвайте
@@ -236,3 +229,62 @@ docker cp autoservice_db:/tmp/autoservice_backup.dump .\autoservice_backup.dump
     данни в публичното хранилище.
 -   Използвайте отделни конфигурации за разработка и продукционна среда.
 -   Преди промени по базата данни създавайте резервно копие.# AutoService
+
+## 12. Стартиране на проекта в GitHub Codespaces
+
+Проектът може да бъде стартиран директно в GitHub Codespaces, без
+необходимост от локална инсталация на Python и Docker Desktop.
+
+### 12.1 Създаване на Codesapce
+
+-   В хранилището на AutoService,
+-   Натисенте бутона Code,
+-   Изберете раздела Codespaces,
+-   И натиснете Create cidespace on main , като изчакате средата да се зареди.
+
+### 12.2 Конфигуриране на средата
+
+-   В терминала на Codespaces нaпишете "cp .env.example .env",
+-   След това отворете файла със "nano .env" и му задайте собствени стойности за секретен ключ и парола за PostgreSQL,
+-   Уверете се че паролата съвпада със DATABASE_URL,
+-   При стартиране чрез Docker Compose приложението използва вътрешния адрес db:5432.
+
+### 12.3 Генериране на тестови SSL сертификати
+
+-   Nginx използва SSL сертификати от директорията certificates.
+-   Създайте тестови самоподписани сертификати:
+    mkdir -p certificates
+
+    openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
+      -keyout certificates/autoservice.key \
+      -out certificates/autoservice.crt \
+      -subj "/CN=localhost"
+
+### 12.4 Стартиране на контейнерите
+
+-   Изграждане и стартиране на услугите:
+    docker compose up --build -d
+-   Проверка на тяхното състояние:
+    docker compose ps
+-   Изпълняване на миграциите към базата данни:
+    docker compose exec web1 flask db upgrade
+
+### 12.5 Отваряне на приложението
+
+1.  Отворете раздел Ports в Codesapces.
+2.  Намерете порт 8080 - HTTP
+3.  Порт 8443 - HTTPS
+4.  За преглед на логовете отворете порт 9999 - Dozzle
+5.  Изберете Open in Browser Или натиснтете CTRL + Left Mouse Button на линка на съответния порт.
+
+-   За спиране на контейнерите:
+    docker compose stop
+
+### 12.6 Важни белешки за CodeSpaces
+
+-   Базата данни в Codespaces е отделна то локалната,
+-   Регистрациите и записите от локалната база данни не се прехвърлят.
+-   За създаване на админисраторски профил напишете:
+    python create_admin.py
+-   За добавяне на услугите към базата данни напишете:
+    python seed_services.py
