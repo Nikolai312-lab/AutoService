@@ -284,3 +284,7 @@ docker cp autoservice_db:/tmp/autoservice_backup.dump .\autoservice_backup.dump
     python create_admin.py
 -   За добавяне на услугите към базата данни напишете:
     python seed_services.py
+
+
+
+    sudo chown codespace:codespace certificates
