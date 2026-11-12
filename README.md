@@ -90,17 +90,19 @@
 3.  Задайте необходимите настройки за базата данни и приложението. Не
     публикувайте реални пароли или секретни ключове.
 4.  Стартирайте контейнерите:
-
--   docker compose up --build -d
+    ```
+    docker compose up --build -d
+    ```
 
 5.  Проверете състоянието им:
-
--   docker compose ps
+    ```
+    docker compose ps
+    ```
 
 6.  Изпълнете миграциите:
-
--   docker compose exec web1 flask db upgrade
-
+    ```
+    docker compose exec web1 flask db upgrade
+    ```
 
 7.  Отворете приложението в браузъра:
 
@@ -112,8 +114,10 @@
     http://localhost:9999/
 
 -   За спиране на услугите:
+    ```
     docker compose stop
-
+    ```
+    
 > Забележка: `docker compose down` спира и премахва контейнерите, но не
 > изтрива именуваните Docker volumes. Не използвайте
 > `docker compose down -v`, ако искате да запазите данните в базата.
@@ -240,9 +244,12 @@ docker cp autoservice_db:/tmp/autoservice_backup.dump .\autoservice_backup.dump
 
 ### 12.2 Конфигуриране на средата
 
--   В терминала на Codespaces нaпишете "cp .env.example .env",
--   След това отворете файла със "nano .env" и му задайте собствени стойности за секретен ключ и парола за PostgreSQL,
--   Уверете се че паролата съвпада със DATABASE_URL,
+-   В терминала на Codespaces нaпишете:
+    ```
+    cp .env.example .env
+    ```
+
+-   Уверете се че паролата в .env съвпада със DATABASE_URL,
 -   При стартиране чрез Docker Compose приложението използва вътрешния адрес db:5432.
 
 ### 12.3 Генериране на тестови SSL сертификати
@@ -252,7 +259,7 @@ docker cp autoservice_db:/tmp/autoservice_backup.dump .\autoservice_backup.dump
     ```
     mkdir -p certificates
     ```
-    
+
     ```
     openssl req -x509 -nodes -days 365 -newkey rsa:2048 \
       -keyout certificates/autoservice.key \
@@ -262,11 +269,19 @@ docker cp autoservice_db:/tmp/autoservice_backup.dump .\autoservice_backup.dump
 ### 12.4 Стартиране на контейнерите
 
 -   Изграждане и стартиране на услугите:
+    ```
     docker compose up --build -d
+    ```
+
 -   Проверка на тяхното състояние:
+    ```
     docker compose ps
+    ```
+
 -   Изпълняване на миграциите към базата данни:
+    ```
     docker compose exec web1 flask db upgrade
+    ```
 
 ### 12.5 Отваряне на приложението
 
@@ -284,6 +299,11 @@ docker cp autoservice_db:/tmp/autoservice_backup.dump .\autoservice_backup.dump
 -   Базата данни в Codespaces е отделна то локалната,
 -   Регистрациите и записите от локалната база данни не се прехвърлят.
 -   За създаване на админисраторски профил напишете:
+    ```
     python create_admin.py
+    ```
+
 -   За добавяне на услугите към базата данни напишете:
+    ```
     python seed_services.py
+    ```
