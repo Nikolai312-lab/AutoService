@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block title %}Моите часове{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Моите часове</h2>
+
+        <a href="{{ url_for('appointments.book') }}"
+           class="btn btn-primary">
+            + Запиши час
+        </a>
+    </div>
+
+    {% if appointments %}
+        <div class="table-responsive">
+            <table class="table table-striped table-bordered">
+                <thead>
+                    <tr>
+                        <th>Автомобил</th>
+                        <th>Услуга</th>
+                        <th>Дата и час</th>
+                        <th>Статус</th>
+                        <th>Оценка</th>
+                        <th>Описание</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for appointment in appointments %}
+                    <tr>
+                        <td>
+                            {{ appointment.vehicle.brand }}
+                            {{ appointment.vehicle.model }}
+                        </td>
+
+                        <td>{{ appointment.service.name }}</td>
+
+                        <td>
+                            {{ appointment.appointment_date.strftime("%d.%m.%Y %H:%M") }}
+                        </td>
+
+                        <td>{{ appointment.status }}</td>
+
+                        <td>
+                            {% if appointment.status == "completed" and not appointment.review %}
+                                <a
+                                    href="{{ url_for('reviews.add_review', appointment_id=appointment.id) }}"
+                                    class="btn btn-warning btn-sm">
+                                    Оцени ремонта
+                                </a>
+                            {% elif appointment.review %}
+                                <span class="badge bg-success">
+                                    Оценен
+                                </span>
+                            {% else %}
+                                -
+                            {% endif %}
+                        </td>
+
+                        <td>{{ appointment.description or "-" }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <div class="alert alert-info">
+            Все още нямате записани часове.
+        </div>
+    {% endif %}
+
+</div>
+{% endblock %}
+```

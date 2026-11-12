@@ -1,0 +1,76 @@
+```html
+{% extends "base.html" %}
+
+{% block title %}Записване на час{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-7">
+            <div class="card shadow">
+                <div class="card-body p-4">
+
+                    <h2 class="mb-4">Записване на час за ремонт</h2>
+
+                    <form method="POST">
+
+                        <div class="mb-3">
+                            <label class="form-label">Избери автомобил</label>
+                            <select name="vehicle_id" class="form-select" required>
+                                {% for vehicle in vehicles %}
+                                    <option value="{{ vehicle.id }}">
+                                        {{ vehicle.brand }} {{ vehicle.model }}
+                                        ({{ vehicle.registration_number }})
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Избери услуга</label>
+                            <select name="service_id" class="form-select" required>
+                                {% for service in services %}
+                                    <option value="{{ service.id }}">
+                                        {{ service.name }} -
+                                        {{ "%.2f"|format(service.price) }} €
+                                    </option>
+                                {% endfor %}
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Дата и час</label>
+                            <input type="datetime-local"
+                                   name="appointment_date"
+                                   class="form-control"
+                                   required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">
+                                Описание на проблема (незадължително)
+                            </label>
+                            <textarea name="description"
+                                      class="form-control"
+                                      rows="4"
+                                      placeholder="Опишете проблема с автомобила..."></textarea>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary w-100">
+                            Изпрати заявка
+                        </button>
+
+                        <a href="{{ url_for('appointments.index') }}"
+                           class="btn btn-secondary w-100 mt-2">
+                            Моите часове
+                        </a>
+
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+```

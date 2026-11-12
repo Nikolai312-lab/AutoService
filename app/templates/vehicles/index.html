@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block title %}Моите автомобили{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Моите автомобили</h2>
+
+        <a href="{{ url_for('vehicles.add') }}"
+           class="btn btn-primary">
+            + Добави автомобил
+        </a>
+    </div>
+
+    {% if vehicles %}
+        <div class="row">
+            {% for vehicle in vehicles %}
+                <div class="col-md-4 mb-3">
+                    <div class="card shadow">
+                        <div class="card-body">
+                            <h5 class="card-title">
+                                {{ vehicle.brand }} {{ vehicle.model }}
+                            </h5>
+
+                            <p class="card-text">
+                                <strong>Регистрационен номер:</strong>
+                                {{ vehicle.registration_number }}
+                                <br>
+
+                                <strong>Година:</strong>
+                                {{ vehicle.year }}
+                            </p>
+
+                            <a  href="{{ url_for('vehicles.edit', vehicle_id=vehicle.id) }}"
+                                class="btn btn-warning btn-sm">
+                                 Редактирай  
+                            </a>
+                            
+                            <form method="POST"
+                                  action="{{ url_for('vehicles.delete', vehicle_id=vehicle.id) }}"
+                                  style="display: inline;"
+                                  onsubmit="return confirm('Сигурни ли сте, че искате да изтриете този автомобил?');">
+                                <button type="submit"
+                                        class="btn btn-danger btn-sm"
+                                        onclick="return confirm('Сигурни ли сте, че искате да изтриете този автомобил?');">
+                                    Изтрий
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="alert alert-info">
+            Все още нямате добавени автомобили.
+        </div>
+    {% endif %}
+
+</div>
+{% endblock %}

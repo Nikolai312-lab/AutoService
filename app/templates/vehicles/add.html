@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block title %}Добавяне на автомобил{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+
+            <div class="card shadow">
+                <div class="card-body p-4">
+
+                    <h2 class="mb-4">Добавяне на автомобил</h2>
+
+                    <form method="POST">
+
+                        <div class="mb-3">
+                            <label class="form-label">Марка</label>
+                            <input type="text" name="brand"
+                                   class="form-control" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Модел</label>
+                            <input type="text" name="model"
+                                   class="form-control" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Регистрационен номер</label>
+                            <input type="text" name="registration_number"
+                                   class="form-control" required>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label">Година</label>
+                            <input type="number" name="year"
+                                   class="form-control"
+                                   min="1886" max="2100" required>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary w-100">
+                            Добави автомобил
+                        </button>
+
+                        <a href="{{ url_for('vehicles.index') }}"
+                           class="btn btn-secondary w-100 mt-2">
+                            Назад
+                        </a>
+
+                    </form>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+{% endblock %}

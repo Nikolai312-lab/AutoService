@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block title %}Нашите услуги{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+
+    <h2 class="text-center mb-4">Услуги на автосервиза</h2>
+
+    {% if services %}
+        <div class="row">
+            {% for service in services %}
+                <div class="col-md-4 mb-4">
+                    <div class="card shadow h-100">
+                        <div class="card-body">
+
+                            <h5 class="card-title">
+                                {{ service.name }}
+                            </h5>
+
+                            <p class="card-text">
+                                {{ service.description or "Няма описание." }}
+                            </p>
+
+                            <p>
+                                <strong>Цена:</strong>
+                                {{ "%.2f"|format(service.price) }} €
+                            </p>
+
+                            <p>
+                                <strong>Продължителност:</strong>
+                                {{ service.duration_minutes }} минути
+                            </p>
+
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    {% else %}
+        <div class="alert alert-info">
+            Все още няма добавени услуги.
+        </div>
+    {% endif %}
+
+</div>
+{% endblock %}

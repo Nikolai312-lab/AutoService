@@ -1,0 +1,77 @@
+ {% extends "base.html" %}
+
+{% block title %}Административно табло{% endblock %}
+
+{% block content %}
+<div class="container mt-4">
+
+    <h2 class="mb-4">Административно табло</h2>
+
+    <div class="row g-4">
+
+        <div class="col-md-6 col-lg-4">
+            <div class="card text-white bg-primary shadow">
+                <div class="card-body">
+                    <h5 class="card-title">Клиенти</h5>
+                    <h2>{{ total_customers }}</h2>
+                    <p class="mb-0">Регистрирани клиенти</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-lg-4">
+            <div class="card text-white bg-success shadow">
+                <div class="card-body">
+                    <h5 class="card-title">Автомобили</h5>
+                    <h2>{{ total_vehicles }}</h2>
+                    <p class="mb-0">Регистрирани автомобили</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-lg-4">
+            <div class="card text-white bg-info shadow">
+                <div class="card-body">
+                    <h5 class="card-title">Записани часове</h5>
+                    <h2>{{ total_appointments }}</h2>
+                    <p class="mb-0">Всички заявки за ремонт</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-lg-4">
+            <div class="card text-white bg-warning shadow">
+                <div class="card-body">
+                    <h5 class="card-title">Приключени ремонти</h5>
+                    <h2>{{ completed_appointments }}</h2>
+                    <p class="mb-0">Успешно завършени ремонти</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-6 col-lg-4">
+            <div class="card text-white bg-dark shadow">
+                <div class="card-body">
+                    <h5 class="card-title">Средна оценка</h5>
+                    <h2>{{ average_rating }} / 5</h2>
+                    <p class="mb-0">Оценки от клиентите</p>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="mt-4">
+        <a href="{{ url_for('admin.appointments') }}"
+           class="btn btn-primary">
+            Управление на заявките
+        </a>
+
+        <a href="{{ url_for('admin.employees') }}"
+           class="btn btn-secondary">
+            Управление на служителите
+        </a>
+    </div>
+
+</div>
+{% endblock %}

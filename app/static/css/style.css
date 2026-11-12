@@ -1,0 +1,139 @@
+body {
+    background-color: #f4f6f9;
+    color: #212529;
+    min-height: 100vh;
+}
+
+.navbar-brand {
+    font-size: 24px;
+    letter-spacing: 1px;
+}
+
+.hero {
+    background: linear-gradient(135deg, #172554, #2563eb);
+    color: white;
+    padding: 80px 25px;
+    border-radius: 15px;
+    margin-top: 20px;
+}
+
+.hero h1 {
+    font-size: 42px;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.hero p {
+    max-width: 650px;
+    margin: 0 auto 30px;
+}
+
+.service-card {
+    background: white;
+    padding: 30px 20px;
+    border-radius: 12px;
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.08);
+    height: 100%;
+    transition: transform 0.2s;
+}
+
+.service-card:hover {
+    transform: translateY(-5px);
+}
+
+.service-card h3 {
+    color: #2563eb;
+    margin-bottom: 15px;
+}
+
+.form-container {
+    background: white;
+    max-width: 480px;
+    margin: 40px auto;
+    padding: 35px;
+    border-radius: 15px;
+    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.1);
+}
+
+.btn-primary {
+    background-color: #2563eb;
+    border-color: #2563eb;
+}
+
+.btn-primary:hover {
+    background-color: #1d4ed8;
+}
+
+/* Административен панел */
+.admin-table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    margin-top: 25px;
+    border-radius: 10px;
+    background: #ffffff;
+}
+
+/* Таблица със заявки */
+.admin-appointments-table {
+    width: 100%;
+    min-width: 1250px;
+    margin-bottom: 0;
+    border-collapse: separate;
+    border-spacing: 0;
+    vertical-align: middle;
+}
+
+/* Заглавия */
+.admin-appointments-table thead th {
+    background-color: #212529;
+    color: #ffffff;
+    font-weight: 600;
+    padding: 15px 12px;
+    white-space: nowrap;
+    border: none;
+}
+
+/* Клетки */
+.admin-appointments-table tbody td {
+    padding: 14px 12px;
+    vertical-align: middle;
+    border-bottom: 1px solid #dee2e6;
+}
+
+/* Редове */
+.admin-appointments-table tbody tr:hover {
+    background-color: #f1f5f9;
+}
+
+/* Описание */
+.admin-appointments-table td.description-cell {
+    min-width: 180px;
+    max-width: 260px;
+    white-space: normal;
+    overflow-wrap: anywhere;
+}
+
+/* Формите в таблицата */
+.admin-appointments-table form {
+    min-width: 150px;
+    margin: 0;
+}
+
+/* Падащи менюта */
+.admin-appointments-table .form-select {
+    min-width: 145px;
+    font-size: 14px;
+}
+
+/* Бутони */
+.admin-appointments-table .btn {
+    margin-top: 5px;
+    white-space: nowrap;
+}
+
+/* Статуси */
+.admin-appointments-table .badge {
+    font-size: 12px;
+    padding: 7px 10px;
+    white-space: nowrap;
+}

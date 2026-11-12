@@ -1,0 +1,191 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container mt-4">
+
+    <h2>Административен панел – Заявки за час</h2>
+
+    <form method="GET" class="row g-3 mt-3 mb-3">
+
+        <div class="col-md-4">
+            <select name="status" class="form-select">
+
+                <option value="all"
+                    {% if status_filter == "all" %}selected{% endif %}>
+                    Всички заявки
+                </option>
+
+                <option value="pending"
+                    {% if status_filter == "pending" %}selected{% endif %}>
+                    Чакащи
+                </option>
+
+                <option value="approved"
+                    {% if status_filter == "approved" %}selected{% endif %}>
+                    Одобрени
+                </option>
+
+                <option value="rejected"
+                    {% if status_filter == "rejected" %}selected{% endif %}>
+                    Отказани
+                </option>
+
+                <option value="completed"
+                    {% if status_filter == "completed" %}selected{% endif %}>
+                    Завършени
+                </option>
+
+            </select>
+        </div>
+
+        <div class="col-md-2">
+            <button type="submit" class="btn btn-primary">
+                Филтрирай
+            </button>
+        </div>
+
+    </form>
+
+    {% if appointments %}
+
+        <div class="table-responsive admin-table-wrapper">
+
+            <table class="table table-striped admin-appointments-table">
+
+            <thead>
+                    <tr>
+                        <th>Клиент</th>
+                        <th>Автомобил</th>
+                        <th>Услуга</th>
+                        <th>Дата и час</th>
+                        <th>Описание</th>
+                        <th>Назначен служител</th>
+                        <th>Статус</th>
+                        <th>Промяна на статус</th>
+                        <th>Назначаване на служител</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+
+                    {% for appointment in appointments %}
+
+                    <tr>
+                        <td>{{ appointment.customer.username }}</td>
+
+                        <td>
+                            {{ appointment.vehicle.brand }}
+                            {{ appointment.vehicle.model }}
+                        </td>
+
+                        <td>{{ appointment.service.name }}</td>
+                        
+                        <td>
+                            {{ appointment.appointment_date.strftime("%d.%m.%Y %H:%M") }}
+                        </td>
+
+                        <td class="description-cell">
+                            {{ appointment.description or "Няма описание" }}
+                        </td>
+
+                        <td>
+                            {% if appointment.employee %}
+                                {{ appointment.employee.name }}
+                            {% else %}
+                                <span class="text-muted">Не е назначен</span>
+                            {% endif %}
+                        </td>
+
+                        <td>
+                            {% if appointment.status == "pending" %}
+                                <span class="badge bg-warning text-dark">Чакаща</span>
+
+                            {% elif appointment.status == "approved" %}
+                                <span class="badge bg-success">Одобрена</span>
+
+                            {% elif appointment.status == "rejected" %}
+                                <span class="badge bg-danger">Отказана</span>
+
+                            {% elif appointment.status == "completed" %}
+                                <span class="badge bg-primary">Завършена</span>
+
+                            {% else %}
+                                <span class="badge bg-secondary">{{ appointment.status }}</span>
+                            {% endif %}
+                        </td>
+
+                        <td>
+                            <form method="POST"
+                                action="{{ url_for('admin.update_appointment_status', appointment_id=appointment.id) }}">
+
+                                <select name="status" class="form-select mb-2">
+
+                                    <option value="pending"
+                                        {% if appointment.status == "pending" %}selected{% endif %}>
+                                        Чакаща
+                                    </option>
+
+                                    <option value="approved"
+                                        {% if appointment.status == "approved" %}selected{% endif %}>
+                                        Одобрена
+                                    </option>
+
+                                    <option value="rejected"
+                                        {% if appointment.status == "rejected" %}selected{% endif %}>
+                                        Отказана
+                                    </option>
+
+                                    <option value="completed"
+                                        {% if appointment.status == "completed" %}selected{% endif %}>
+                                        Завършена
+                                    </option>
+
+                                </select>
+
+                                <button type="submit" class="btn btn-primary btn-sm">
+                                    Запази
+                                </button>
+
+                            </form>
+                        </td>
+
+                        <td>
+                            <form method="POST"
+                                action="{{ url_for('admin.assign_employee', appointment_id=appointment.id) }}">
+
+                                <input type="hidden" name="status_filter" value="{{ status_filter }}">
+
+                                <select name="employee_id" class="form-select mb-2">
+                                    <option value="">Без служител</option>
+
+                                    {% for employee in employees %}
+                                        <option value="{{ employee.id }}"
+                                            {% if appointment.employee_id == employee.id %}selected{% endif %}>
+                                            {{ employee.name }} – {{ employee.position }}
+                                        </option>
+                                    {% endfor %}
+                                </select>
+
+                                <button type="submit" class="btn btn-outline-primary btn-sm">
+                                    Назначи
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+
+                    {% endfor %}
+
+                </tbody>
+
+            </table>
+        </div>
+    {% else %}
+
+        <p>Все още няма заявки за час.</p>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

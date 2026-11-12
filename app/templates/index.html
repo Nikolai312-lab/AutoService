@@ -1,0 +1,55 @@
+{% extends "base.html" %}
+
+{% block title %}Начало | AutoService{% endblock %}
+
+{% block content %}
+
+<section class="hero text-center">
+    <h1>Добре дошли в AutoService</h1>
+
+    <p class="lead">
+        Професионална грижа за вашия автомобил.
+        Лесно записване на часове и проследяване на ремонти.
+    </p>
+
+    {% if current_user.is_authenticated %}
+        <a href="{{ url_for('main.index') }}" class="btn btn-primary btn-lg">
+            Моето табло
+        </a>
+    {% else %}
+        <a href="{{ url_for('auth.register') }}" class="btn btn-primary btn-lg">
+            Създай профил
+        </a>
+
+        <a href="{{ url_for('auth.login') }}" class="btn btn-outline-light btn-lg">
+            Вход
+        </a>
+    {% endif %}
+</section>
+
+<section class="row mt-5 text-center">
+
+    <div class="col-md-4 mb-3">
+        <div class="service-card">
+            <h3>Автомобили</h3>
+            <p>Добавяйте и управлявайте вашите автомобили.</p>
+        </div>
+    </div>
+
+    <div class="col-md-4 mb-3">
+        <div class="service-card">
+            <h3>Записване на час</h3>
+            <p>Изберете услуга и удобно време за посещение.</p>
+        </div>
+    </div>
+
+    <div class="col-md-4 mb-3">
+        <div class="service-card">
+            <h3>Обслужване</h3>
+            <p>Следете статуса на вашите ремонти.</p>
+        </div>
+    </div>
+
+</section>
+
+{% endblock %}

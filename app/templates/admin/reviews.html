@@ -1,0 +1,68 @@
+
+{% extends "base.html" %}
+
+{% block title %}Оценки от клиенти{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Оценки от клиенти</h2>
+
+        <a href="{{ url_for('admin.appointments') }}"
+           class="btn btn-secondary">
+            Назад към часовете
+        </a>
+    </div>
+
+    {% if reviews %}
+        <div class="table-responsive">
+            <table class="table table-striped table-bordered">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Клиент</th>
+                        <th>Автомобил</th>
+                        <th>Услуга</th>
+                        <th>Оценка</th>
+                        <th>Коментар</th>
+                        <th>Дата</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for review in reviews %}
+                    <tr>
+                        <td>{{ review.customer.username }}</td>
+
+                        <td>
+                            {{ review.appointment.vehicle.brand }}
+                            {{ review.appointment.vehicle.model }}
+                        </td>
+
+                        <td>{{ review.appointment.service.name }}</td>
+
+                        <td>
+                            <span class="text-warning">
+                                {{ "★" * review.rating }}
+                            </span>
+                            ({{ review.rating }}/5)
+                        </td>
+
+                        <td>{{ review.comment or "-" }}</td>
+
+                        <td>
+                            {{ review.created_at.strftime("%d.%m.%Y %H:%M") }}
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    {% else %}
+        <div class="alert alert-info">
+            Все още няма оставени оценки от клиенти.
+        </div>
+    {% endif %}
+
+</div>
+{% endblock %}

@@ -1,0 +1,77 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-7">
+            <div class="card shadow">
+                <div class="card-body p-4">
+
+                    <h2 class="mb-4">Оценка на ремонта</h2>
+
+                    <p>
+                        <strong>Автомобил:</strong>
+                        {{ appointment.vehicle.brand }}
+                        {{ appointment.vehicle.model }}
+                    </p>
+
+                    <p>
+                        <strong>Услуга:</strong>
+                        {{ appointment.service.name }}
+                    </p>
+
+                    <form method="POST">
+
+                        <div class="mb-3">
+                            <label for="rating" class="form-label">
+                                Оценка (от 1 до 5 звезди)
+                            </label>
+
+                            <select
+                                class="form-select"
+                                id="rating"
+                                name="rating"
+                                required
+                            >
+                                <option value="">Избери оценка</option>
+                                <option value="5">★★★★★ - Отлично</option>
+                                <option value="4">★★★★ - Много добре</option>
+                                <option value="3">★★★ - Добре</option>
+                                <option value="2">★★ - Задоволително</option>
+                                <option value="1">★ - Незадоволително</option>
+                            </select>
+                        </div>
+
+                        <div class="mb-3">
+                            <label for="comment" class="form-label">
+                                Коментар
+                            </label>
+
+                            <textarea
+                                class="form-control"
+                                id="comment"
+                                name="comment"
+                                rows="4"
+                                placeholder="Споделете вашето мнение за обслужването..."
+                            ></textarea>
+                        </div>
+
+                        <button type="submit" class="btn btn-primary">
+                            Изпрати оценката
+                        </button>
+
+                        <a
+                            href="{{ url_for('appointments.index') }}"
+                            class="btn btn-secondary"
+                        >
+                            Назад
+                        </a>
+
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
